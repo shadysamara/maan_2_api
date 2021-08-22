@@ -21,5 +21,9 @@ class HomeApiHelper {
     return allProductsResponses;
   }
 
-  getAllCategories() async {}
+  Future<List<dynamic>> getAllCategories() async {
+    String url = 'https://fakestoreapi.com/products/categories';
+    Response response = await dio.get(url);
+    return response.data;
+  }
 }
