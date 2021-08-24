@@ -1,9 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:maan2_api/ui/new_product/models/add_product_model.dart';
 
-class ApiHelper {
-  ApiHelper._();
-  static ApiHelper apiHelper = ApiHelper._();
-  addNewProduct(AddNewProductRequest request) async {}
+class NewProductApiHelper {
+  NewProductApiHelper._();
+  static NewProductApiHelper apiHelper = NewProductApiHelper._();
+  addNewProduct(AddNewProductRequest request) async {
+    String url = 'https://fakestoreapi.com/products';
+    Response response = await Dio().post(url, data: request.toMap());
+    print(response.data);
+  }
+
   updateProduct(AddNewProductRequest request, int productId) async {}
   deleteProduct(int productId) async {}
 }
