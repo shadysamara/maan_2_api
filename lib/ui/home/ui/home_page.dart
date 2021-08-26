@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:maan2_api/ui/cart/ui/cart_page.dart';
 import 'package:maan2_api/ui/home/data/api_helper.dart';
 import 'package:maan2_api/ui/home/models/all_products_response.dart';
 import 'package:maan2_api/ui/home/providers/home_provider.dart';
@@ -20,6 +21,16 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return CartPage();
+                }));
+              },
+              icon: Icon(Icons.shopping_bag))
+        ],
       ),
       body: Consumer<HomeProvider>(
         builder: (context, provider, x) {
