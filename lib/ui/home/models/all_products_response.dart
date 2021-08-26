@@ -17,7 +17,7 @@ class AllProductsResponse {
   AllProductsResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    price = json['price'];
+    price = num.parse(json['price'].toString());
     description = json['description'];
     category = json['category'];
     image = json['image'];
@@ -27,9 +27,9 @@ class AllProductsResponse {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['title'] = this.title;
-    data['price'] = this.price;
+    data['price'] = this.price.toString();
     data['description'] = this.description;
-    data['category'] = this.category;
+    // data['category'] = this.category;
     data['image'] = this.image;
     return data;
   }

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:maan2_api/ui/cart/ui/cart_page.dart';
+import 'package:maan2_api/ui/cart/ui/favourite_page.dart';
 import 'package:maan2_api/ui/home/data/api_helper.dart';
 import 'package:maan2_api/ui/home/models/all_products_response.dart';
 import 'package:maan2_api/ui/home/providers/home_provider.dart';
@@ -29,7 +30,15 @@ class HomePage extends StatelessWidget {
                   return CartPage();
                 }));
               },
-              icon: Icon(Icons.shopping_bag))
+              icon: Icon(Icons.shopping_bag)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return FavouritePage();
+                }));
+              },
+              icon: Icon(Icons.favorite)),
         ],
       ),
       body: Consumer<HomeProvider>(

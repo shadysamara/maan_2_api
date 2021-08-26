@@ -47,15 +47,29 @@ class ProductWidget extends StatelessWidget {
           margin: EdgeInsets.all(10),
           child: Align(
               alignment: Alignment.topLeft,
-              child: IconButton(
-                onPressed: () {
-                  Provider.of<DatabaseProvider>(context, listen: false)
-                      .insertProductInCart(product);
-                },
-                icon: Icon(
-                  Icons.shopping_bag,
-                  size: 40,
-                ),
+              child: Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Provider.of<DatabaseProvider>(context, listen: false)
+                          .insertProductInCart(product);
+                    },
+                    icon: Icon(
+                      Icons.shopping_bag,
+                      size: 40,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Provider.of<DatabaseProvider>(context, listen: false)
+                          .insertProductInFavourite(product);
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 40,
+                    ),
+                  ),
+                ],
               )),
         ))
       ],

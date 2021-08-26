@@ -1,3 +1,4 @@
+import 'package:maan2_api/ui/home/models/all_products_response.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -11,6 +12,10 @@ class DbHelper {
   static final String productDetailsColumn = 'productDetails';
   static final String id = 'id';
   static final String favouriteTableName = 'favourites';
+  static final String favouriteTitleColumnName = 'title';
+  static final String favouritePriceColumnName = 'price';
+  static final String favouriteDescriptionColumnName = 'description';
+  static final String favouriteImageColumnName = 'image';
 
   Database database;
   initDatabase() async {
@@ -26,8 +31,11 @@ class DbHelper {
       db.execute(
           'CREATE TABLE $cartTableName ($id INTEGER PRIMARY KEY, $productDetailsColumn TEXT)');
 
-      db.execute(
-          'CREATE TABLE $favouriteTableName ($id INTEGER PRIMARY KEY, $productDetailsColumn TEXT)');
+      db.execute('''CREATE TABLE $favouriteTableName ($id INTEGER PRIMARY KEY,
+           $favouriteTitleColumnName TEXT,
+            $favouritePriceColumnName TEXT,
+             $favouriteDescriptionColumnName TEXT, 
+             $favouriteImageColumnName TEXT)''');
     });
     return database;
   }
@@ -38,10 +46,9 @@ class DbHelper {
     print(x);
   }
 
-  addToFavourite(String productDetails, int productId) async {
-    int x = await database.insert(favouriteTableName,
-        {'id': productId, productDetailsColumn: productDetails});
-    print(x);
+  addToFavourite(AllProductsResponse productDetails) async {
+    int x = await database.insert(favouriteTableName, productDetails.toJson());
+    print('favourite $x');
   }
 
   Future<List<Map<String, Object>>> getCart() async {

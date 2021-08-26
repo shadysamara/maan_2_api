@@ -17,14 +17,26 @@ class DatabaseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getAllProductsInFavourite() async {}
+  getAllProductsInFavourite() async {
+    List<Map<String, Object>> carts =
+        await DbHelper.cartDbHelper.getFavourite();
+    favouriteProdcts = carts.map((e) {
+      return AllProductsResponse.fromJson(e);
+    }).toList();
+    notifyListeners();
+  }
+
   insertProductInCart(AllProductsResponse allProductsResponse) async {
     String product = json.encode(allProductsResponse.toJson());
     await DbHelper.cartDbHelper.addToCart(product, allProductsResponse.id);
     getAllProductsInCart();
   }
 
-  insertProductInFavourite() async {}
+  insertProductInFavourite(AllProductsResponse allProductsResponse) async {
+    await DbHelper.cartDbHelper.addToFavourite(allProductsResponse);
+    getAllProductsInFavourite();
+  }
+
   deleteProductInCart(int id) async {
     CustomDialoug.customDialoug.showCustomDialoug(
         'You will delete this product from cart, are you sure',
@@ -38,5 +50,16 @@ class DatabaseProvider extends ChangeNotifier {
     getAllProductsInCart();
   }
 
-  deleteProductInFavourite() async {}
+  deleteProductInFavourite(int id) async {
+    CustomDialoug.customDialoug.showCustomDialoug(
+        'You will delete this product from favourite, are you sure',
+        'Alert',
+        excuteFavDeltet,
+        id);
+  }
+
+  excuteFavDeltet(int id) async {
+    await DbHelper.cartDbHelper.removeFromFavourite(id);
+    getAllProductsInFavourite();
+  }
 }
