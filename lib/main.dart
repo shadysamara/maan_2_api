@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:maan2_api/helpers/route_helper.dart';
+import 'package:maan2_api/helpers/theme_provider.dart';
 import 'package:maan2_api/ui/cart/data/sqflite_helper.dart';
 import 'package:maan2_api/ui/cart/providers/database_provider.dart';
 import 'package:maan2_api/ui/home/providers/home_provider.dart';
@@ -16,6 +17,9 @@ void main() async {
   await DbHelper.cartDbHelper.initDatabase();
   runApp(MultiProvider(
       providers: [
+        ChangeNotifierProvider<ThemeProvider>(
+          create: (context) => ThemeProvider(),
+        ),
         ChangeNotifierProvider<HomeProvider>(
           create: (context) => HomeProvider(),
         ),
@@ -40,6 +44,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
+        theme: Provider.of<ThemeProvider>(context).selectedTheme,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,

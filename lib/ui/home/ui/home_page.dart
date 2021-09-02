@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:maan2_api/helpers/theme_provider.dart';
 import 'package:maan2_api/ui/cart/ui/cart_page.dart';
 import 'package:maan2_api/ui/cart/ui/favourite_page.dart';
 import 'package:maan2_api/ui/home/data/api_helper.dart';
@@ -20,40 +21,48 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Colors.grey[400],
-      appBar: AppBar(
-        title: Text('Home'.tr()),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return CartPage();
-                }));
-              },
-              icon: Icon(Icons.shopping_bag)),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return FavouritePage();
-                }));
-              },
-              icon: Icon(Icons.favorite)),
-          IconButton(
-              onPressed: () {
-                Locale currentLocale = context.locale;
-                if (currentLocale == Locale('en')) {
-                  context.setLocale(Locale('ar'));
-                  // context.locale = Locale('ar');
-                } else {
-                  context.setLocale(Locale('en'));
-                  //  context.locale = Locale('en');
-                }
-              },
-              icon: Icon(Icons.language))
-        ],
-      ),
+      appBar: AppBar(title: Text('Home'.tr()), actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return CartPage();
+              }));
+            },
+            icon: Icon(Icons.shopping_bag)),
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return FavouritePage();
+              }));
+            },
+            icon: Icon(Icons.favorite)),
+        IconButton(
+            onPressed: () {
+              Locale currentLocale = context.locale;
+              if (currentLocale == Locale('en')) {
+                context.setLocale(Locale('ar'));
+                // context.locale = Locale('ar');
+              } else {
+                context.setLocale(Locale('en'));
+                //  context.locale = Locale('en');
+              }
+            },
+            icon: Icon(Icons.language)),
+        PopupMenuButton<String>(
+            onSelected:
+                Provider.of<ThemeProvider>(context, listen: false).handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Light', 'Dark', 'Kids'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(
+                    choice,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                );
+              }).toList();
+            }),
+      ]),
       body: Consumer<HomeProvider>(
         builder: (context, provider, x) {
           List<AllProductsResponse> allProducts = provider.allProducts;
