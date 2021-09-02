@@ -13,6 +13,7 @@ import 'package:maan2_api/ui/home/ui/widgets/product_widget.dart';
 import 'package:maan2_api/ui/product_details/providers/product_details_provider.dart';
 import 'package:maan2_api/ui/product_details/ui/product_details.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Home'.tr()),
         actions: [
           IconButton(
               onPressed: () {
@@ -39,6 +40,18 @@ class HomePage extends StatelessWidget {
                 }));
               },
               icon: Icon(Icons.favorite)),
+          IconButton(
+              onPressed: () {
+                Locale currentLocale = context.locale;
+                if (currentLocale == Locale('en')) {
+                  context.setLocale(Locale('ar'));
+                  // context.locale = Locale('ar');
+                } else {
+                  context.setLocale(Locale('en'));
+                  //  context.locale = Locale('en');
+                }
+              },
+              icon: Icon(Icons.language))
         ],
       ),
       body: Consumer<HomeProvider>(
@@ -74,7 +87,7 @@ class HomePage extends StatelessWidget {
                         }).toList(),
                       ),
                 Text(
-                  'All Categories',
+                  'All Categories'.tr(),
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
                 categories == null
